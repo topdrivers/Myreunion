@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">My reu</string>
+
+    <string name="room01">Eclair</string>
+    <string name="room02">Andromède</string>
+    <string name="room03">Paintsilvia</string>
+    <string name="room04">Pegasus</string>
+    <string name="room05">Vulton</string>
+    <string name="room06">Quantum</string>
+    <string name="room07">Sirius</string>
+    <string name="room08">Centuron</string>
+    <string name="room09">Poseidon</string>
+    <string name="room10">Artemis</string>
+</resources>
