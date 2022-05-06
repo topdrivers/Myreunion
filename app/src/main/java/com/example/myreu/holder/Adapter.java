@@ -16,9 +16,14 @@ import java.util.List;
 public class Adapter extends RecyclerView.Adapter<ViewHolder> {
 
     private List<Meeting> meetingList;
+    public static Boolean isFilteredList;
+    public static List<Meeting> filteredList;
 
     public Adapter(List<Meeting> meetingList) {
-        this.meetingList = meetingList;
+
+
+            this.meetingList = meetingList;
+
     }
 
     @NonNull
@@ -47,4 +52,6 @@ public class Adapter extends RecyclerView.Adapter<ViewHolder> {
     public Meeting getMeeting(int position) {
         return this.meetingList.get(position);
     }
+
+
 }

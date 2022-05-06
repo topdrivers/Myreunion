@@ -26,8 +26,10 @@ import android.widget.TextView;
 
 import com.example.myreu.Models.Meeting;
 import com.example.myreu.Models.Room;
+import com.example.myreu.di.DI;
 import com.example.myreu.holder.Adapter;
 import com.example.myreu.service.MeetingAdded;
+import com.example.myreu.service.MeetingApiService;
 import com.example.myreu.service.MeetingGenerator;
 import com.example.myreu.service.RoomGenerator;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -154,13 +156,19 @@ public class AddMeetingActivity extends AppCompatActivity {
                   //      mBeginTimeEditJoda,name.getText().toString(),addNewRoom, participants.getText().toString() );
                 Meeting meeting = new Meeting(7,new DateTime(mDateEditJoda.getYear(), mDateEditJoda.getMonthOfYear(), mDateEditJoda.getDayOfMonth(), mDateEditJoda.getHourOfDay(), mDateEditJoda.getMinuteOfHour()),
                         new DateTime(mBeginTimeEditJoda.getYear(), mBeginTimeEditJoda.getMonthOfYear(), mBeginTimeEditJoda.getDayOfMonth(), mBeginTimeEditJoda.getHourOfDay(), mBeginTimeEditJoda.getMinuteOfHour()),name.getText().toString(),addNewRoom, participants.getText().toString() );
-
+/*
                  List<Meeting> meetingList = MeetingGenerator.generateMeetings();
                  meetingList.add(meeting);
                 MeetingAdded meetingAdded = new MeetingAdded();
                 meetingAdded.addMeeting(meeting);
+
+ */
+
+                MeetingApiService meetingApiService = DI.getMeetingApiService();
+                List<Meeting> meetings = meetingApiService.getMeetings();
+                meetingApiService.addMeeting(meeting);
                 //meetingList.add(meeting);
-                System.out.println("------------meetinglist-----------"+meetingList);
+                System.out.println("------------meetinglist-----------"+meetings);
                //Adapter adapter = new Adapter(meetingList);
                 //recyclerView.setAdapter(adapter);
 //               adapter.notifyDataSetChanged();
