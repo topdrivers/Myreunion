@@ -20,7 +20,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.Spinner;
+
 
 import com.example.myreu.Models.Meeting;
 import com.example.myreu.Utils.ItemClickSupport;
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
+        this.configureEspressoIdlingResource();
 
         new RoomGenerator();
         meetingApiService= DI.getMeetingApiService();
@@ -118,10 +118,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showAllMeetings() {
+        incrementIdleResource();
         initList(meetingApiService.getMeetings());
+
         meetingApiService.getMeetings();
 
         adapter.notifyDataSetChanged();
+
     }
 
     private void filterByDecreasingDate() {
@@ -158,8 +161,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initList(List<Meeting> meetings) {
+        decrementIdleResource();
         adapter = new Adapter(meetings);
         recyclerView.setAdapter(adapter);
+
     }
 
     private void configureRecyclerView() {
