@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/details_date_text"
 
-        android:text="text1"
+        android:text="Social media"
         android:textSize="26sp"
         android:textStyle="bold"
 

@@ -1,5 +1,6 @@
 package com.example.myreu;
 
+import static com.example.myreu.Utils.AutocompleteTextViewAdapterUtils.Autocomplete;
 import static com.example.myreu.Utils.TimeUtils.beginTimeHandle;
 import static com.example.myreu.Utils.TimeUtils.dateHandle;
 import static com.example.myreu.Utils.TimeUtils.endTimeHandle;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -32,7 +34,10 @@ import com.example.myreu.service.MeetingAdded;
 import com.example.myreu.service.MeetingApiService;
 import com.example.myreu.service.MeetingGenerator;
 import com.example.myreu.service.RoomGenerator;
+
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -50,11 +55,15 @@ public class AddMeetingActivity extends AppCompatActivity {
     @BindView(R.id.activity_add_meeting_date) TextView date;
     @BindView(R.id.activity_add_meeting_begin) TextView begin;
     @BindView(R.id.activity_add_meeting_end) TextView end;
-    @BindView(R.id.activity_add_meeting_participants) EditText participants;
+    
+    @BindView(R.id.textInputLayout) TextInputLayout participants;
     @BindView(R.id.activity_add_meeting_item_name)    EditText name;
     @BindView(R.id.activity_add_meeting_room)    TextView room;
     @BindView(R.id.spinner) Spinner spinner;
     @BindView(R.id.activity_add_meeting_button) Button saveButton;
+    @BindView(R.id.chipGroup) ChipGroup mParticipantsChipGroup;
+    @BindView(R.id.addParticipant_button) Button addParticipantButton;
+    @BindView(R.id.participant_autoCompleteTextView) AutoCompleteTextView mParticipantsAutoCompleteTextView;
 
 
 
@@ -150,12 +159,21 @@ public class AddMeetingActivity extends AppCompatActivity {
                 Room addNewRoom = RoomGenerator.genrateRooms().get(spinner.getSelectedItemPosition() - 1);
                 System.out.println("-------------------------newroom----------------"+addNewRoom);
 
-
+                /* Créer la liste des participants dans la liste des réunions sous forme de String séparés par des virgules */
+                String mParticipants = "";
+                for (int i = 0; i < mParticipantsChipGroup.getChildCount(); i++) {
+                    com.google.android.material.chip.Chip chip = (com.google.android.material.chip.Chip) mParticipantsChipGroup.getChildAt(i);
+                    if (i == 0) {
+                        mParticipants = chip.getText().toString().concat(mParticipants);
+                    } else {
+                        mParticipants = chip.getText().toString().concat(", " + mParticipants);
+                    }
+                }
 
                 //Meeting meeting = new Meeting(7,mDateEditJoda,
                   //      mBeginTimeEditJoda,name.getText().toString(),addNewRoom, participants.getText().toString() );
                 Meeting meeting = new Meeting(7,new DateTime(mDateEditJoda.getYear(), mDateEditJoda.getMonthOfYear(), mDateEditJoda.getDayOfMonth(), mDateEditJoda.getHourOfDay(), mDateEditJoda.getMinuteOfHour()),
-                        new DateTime(mBeginTimeEditJoda.getYear(), mBeginTimeEditJoda.getMonthOfYear(), mBeginTimeEditJoda.getDayOfMonth(), mBeginTimeEditJoda.getHourOfDay(), mBeginTimeEditJoda.getMinuteOfHour()),name.getText().toString(),addNewRoom, participants.getText().toString() );
+                        new DateTime(mBeginTimeEditJoda.getYear(), mBeginTimeEditJoda.getMonthOfYear(), mBeginTimeEditJoda.getDayOfMonth(), mBeginTimeEditJoda.getHourOfDay(), mBeginTimeEditJoda.getMinuteOfHour()),name.getText().toString(),addNewRoom, mParticipants );
 /*
                  List<Meeting> meetingList = MeetingGenerator.generateMeetings();
                  meetingList.add(meeting);
@@ -163,6 +181,8 @@ public class AddMeetingActivity extends AppCompatActivity {
                 meetingAdded.addMeeting(meeting);
 
  */
+
+                System.out.println("---------------CHipGroup---------------"+mParticipantsChipGroup.getDisplay());
 
                 MeetingApiService meetingApiService = DI.getMeetingApiService();
                 List<Meeting> meetings = meetingApiService.getMeetings();
@@ -180,6 +200,8 @@ public class AddMeetingActivity extends AppCompatActivity {
             }
         });
 
+        /* Autocomplete + chips to add the participants : */
+        Autocomplete(mParticipantsAutoCompleteTextView, this, addParticipantButton, mParticipantsChipGroup, getDrawable(R.drawable.ic_person_pin_black_18dp));
 
 
 

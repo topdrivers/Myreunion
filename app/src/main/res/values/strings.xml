@@ -11,4 +11,9 @@
     <string name="room08">Centuron</string>
     <string name="room09">Poseidon</string>
     <string name="room10">Artemis</string>
+
+    <string name="social_media_name_test">Urgent</string>
+    <string name="add_participant">Ajouter</string>
+    <string name="participants">Veuillez renseigner les emails des participant</string>
+    <string name="its_not_an_email_message">ce n\'est pas un email</string>
 </resources>

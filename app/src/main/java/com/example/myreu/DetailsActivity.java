@@ -2,7 +2,9 @@ package com.example.myreu;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.test.espresso.idling.CountingIdlingResource;
 
 import android.content.Intent;
 import android.database.DataSetObserver;
@@ -44,7 +46,8 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         ButterKnife.bind(this);
-
+        this.configureEspressoIdlingResource();
+        incrementIdleResource();
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
        // Bundle bundle = intent.getExtras();
@@ -72,8 +75,31 @@ public class DetailsActivity extends AppCompatActivity {
         //this.detailsDate.setInputType(meeting.getStartMeeting().getDayOfYear());
         this.detailsParticipants.setText(meeting.getParticipants());
         this.detailsRoom.setText(meeting.getRoom().getName());
+        decrementIdleResource();
 
 
+    }
 
+    @VisibleForTesting
+    public CountingIdlingResource getEspressoIdlingResourceForMainFragment() {
+        return this.getEspressoIdlingResource();
+    }
+    // FOR TESTING
+    @VisibleForTesting protected CountingIdlingResource espressoTestIdlingResource;
+
+    @VisibleForTesting
+    public CountingIdlingResource getEspressoIdlingResource() { return espressoTestIdlingResource; }
+
+    @VisibleForTesting
+    private void configureEspressoIdlingResource(){
+        this.espressoTestIdlingResource = new CountingIdlingResource("Network_Call");
+    }
+
+    protected void incrementIdleResource(){
+        if (BuildConfig.DEBUG) this.espressoTestIdlingResource.increment();
+    }
+
+    protected void decrementIdleResource(){
+        if (BuildConfig.DEBUG) this.espressoTestIdlingResource.decrement();
     }
 }
