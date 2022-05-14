@@ -41,8 +41,8 @@ dependencies {
 
     implementation 'androidx.test.espresso:espresso-contrib:3.5.0-alpha06'
     implementation 'androidx.test.espresso:espresso-core:3.5.0-alpha06'
-    implementation 'androidx.test:rules:1.4.1-alpha06'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+        androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
 
     //idling
     implementation 'androidx.test.espresso:espresso-idling-resource:3.4.0'
@@ -61,4 +61,19 @@ dependencies {
     // VIEW MODEL & LIVE DATA
     implementation "android.arch.lifecycle:extensions:1.1.1"
     androidTestImplementation "android.arch.core:core-testing:1.1.1"
+
+    //Rules
+    //implementation 'androidx.test:rules:1.4.1-alpha06'
+    androidTestImplementation 'androidx.test:rules:1.3.0-alpha04'
+
+    //androidTestImplementation 'androidx.test:rules:1.3.0-alpha04'
+
+    androidTestImplementation('com.android.support.test.espresso:espresso-contrib:3.0.2') {
+        exclude group: 'com.android.support', module: 'appcompat'
+        exclude module: 'support-annotations'
+        exclude module: 'support-v4'
+        exclude module: 'support-v13'
+        exclude module: 'recyclerview-v7'
+        exclude module: 'appcompat-v7'
+    }
 }

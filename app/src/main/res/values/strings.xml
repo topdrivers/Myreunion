@@ -16,4 +16,5 @@
     <string name="add_participant">Ajouter</string>
     <string name="participants">Veuillez renseigner les emails des participant</string>
     <string name="its_not_an_email_message">ce n\'est pas un email</string>
+    <string name="text1_name_test">text1</string>
 </resources>

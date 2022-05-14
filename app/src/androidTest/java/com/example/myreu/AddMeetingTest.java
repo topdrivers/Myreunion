@@ -20,6 +20,10 @@ import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
 
 import android.content.Context;
+import android.database.DataSetObserver;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -138,8 +142,26 @@ public class AddMeetingTest {
         Thread.sleep( 3000);
         onView(ViewMatchers.withId(R.id.activity_add_meeting_button)).perform(click());
 
-        onView(allOf(withId(R.id.activity_main_item_name), withText("Text1"), isDisplayed()));
-        onView(allOf(withId(R.id.activity_main_participants), withText("Text2"), isDisplayed()));
+        //onView(allOf(withId(R.id.activity_main_item_name), withText("Text1"), isDisplayed()));
+        //ViewInteraction viewInteraction = onView(allOf(withId(R.id.activity_main_item_name),withText("text1"), isDisplayed()));
+        //viewInteraction.check(matches(withText("text1")));
+
+        Thread.sleep(3000);
+
+        //-------------------------------------------
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.activity_main_item_name),
+                        childAtPosition(
+                                allOf(withId(R.id.constraint_layout),
+                                        childAtPosition(
+                                                withId(R.id.main_recycler_view),
+                                                7)),
+                                1),
+                        isDisplayed()));
+
+       textView.check(matches(withTitle("text1")));
+
+        //---------------------------------------------
         //onView(allOf(withId(R.id.activity_main_room), withText("Text2"), isDisplayed()));
         Thread.sleep(3000);
 

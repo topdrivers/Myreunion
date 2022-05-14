@@ -21,13 +21,18 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.example.myreu.Models.Meeting;
+import com.example.myreu.di.DI;
 import com.example.myreu.holder.Adapter;
 import com.example.myreu.service.MeetingAdded;
+import com.example.myreu.service.MeetingApiService;
 import com.example.myreu.service.MeetingGenerator;
 import com.google.android.material.textfield.TextInputLayout;
 
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,6 +44,7 @@ public class DetailsActivity extends AppCompatActivity {
     @BindView(R.id.activity_details_participants)    TextView detailsParticipants;
     @BindView(R.id.activity_details_item_name)    TextView detailsName;
     @BindView(R.id.activity_details_room)    TextView detailsRoom;
+    MeetingApiService meetingApiService;
 
 
     @Override
@@ -60,9 +66,10 @@ public class DetailsActivity extends AppCompatActivity {
        // Meeting meeting = MeetingGenerator.MEETING_LIST.get(id);
         //Meeting meeting = MeetingGenerator.generateMeetings().get(id);
 
-        MeetingAdded meetingAdded = new MeetingAdded();
-
-        Meeting meeting = meetingAdded.getMeetings().get(id);
+       //MeetingAdded meetingAdded = new MeetingAdded();
+        Meeting meeting = new Meeting();
+        meetingApiService = DI.getMeetingApiService();
+        meeting = meetingApiService.getMeetings().get(id);
 
         //GithubUser user = (GithubUser) bundle.getSerializable("userSelected");
         Log.e("Name", "-------------Name------------- : "+meeting.getName());

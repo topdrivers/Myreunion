@@ -64,6 +64,7 @@ public class AddMeetingActivity extends AppCompatActivity {
     @BindView(R.id.chipGroup) ChipGroup mParticipantsChipGroup;
     @BindView(R.id.addParticipant_button) Button addParticipantButton;
     @BindView(R.id.participant_autoCompleteTextView) AutoCompleteTextView mParticipantsAutoCompleteTextView;
+    MeetingApiService meetingApiService;
 
 
 
@@ -73,6 +74,7 @@ public class AddMeetingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_meeting);
         ButterKnife.bind(this);
+        meetingApiService= DI.getMeetingApiService();
 
         date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,7 +174,10 @@ public class AddMeetingActivity extends AppCompatActivity {
 
                 //Meeting meeting = new Meeting(7,mDateEditJoda,
                   //      mBeginTimeEditJoda,name.getText().toString(),addNewRoom, participants.getText().toString() );
-                Meeting meeting = new Meeting(7,new DateTime(mDateEditJoda.getYear(), mDateEditJoda.getMonthOfYear(), mDateEditJoda.getDayOfMonth(), mDateEditJoda.getHourOfDay(), mDateEditJoda.getMinuteOfHour()),
+                int id = meetingApiService.getMeetings().size();
+                System.out.println("------------id----------"+id);
+
+                Meeting meeting = new Meeting(id,new DateTime(mDateEditJoda.getYear(), mDateEditJoda.getMonthOfYear(), mDateEditJoda.getDayOfMonth(), mDateEditJoda.getHourOfDay(), mDateEditJoda.getMinuteOfHour()),
                         new DateTime(mBeginTimeEditJoda.getYear(), mBeginTimeEditJoda.getMonthOfYear(), mBeginTimeEditJoda.getDayOfMonth(), mBeginTimeEditJoda.getHourOfDay(), mBeginTimeEditJoda.getMinuteOfHour()),name.getText().toString(),addNewRoom, mParticipants );
 /*
                  List<Meeting> meetingList = MeetingGenerator.generateMeetings();
@@ -184,11 +189,11 @@ public class AddMeetingActivity extends AppCompatActivity {
 
                 System.out.println("---------------CHipGroup---------------"+mParticipantsChipGroup.getDisplay());
 
-                MeetingApiService meetingApiService = DI.getMeetingApiService();
-                List<Meeting> meetings = meetingApiService.getMeetings();
+               // MeetingApiService meetingApiService = DI.getMeetingApiService();
+                //List<Meeting> meetings = meetingApiService.getMeetings();
                 meetingApiService.addMeeting(meeting);
                 //meetingList.add(meeting);
-                System.out.println("------------meetinglist-----------"+meetings);
+                //System.out.println("------------meetinglist-----------"+meetings);
                //Adapter adapter = new Adapter(meetingList);
                 //recyclerView.setAdapter(adapter);
 //               adapter.notifyDataSetChanged();

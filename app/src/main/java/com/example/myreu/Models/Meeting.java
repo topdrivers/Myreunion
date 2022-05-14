@@ -10,6 +10,8 @@ public class Meeting {
     private Room room;
     private String participants;
 
+    public Meeting (){}
+
     public Meeting(int id, DateTime startMeeting, DateTime endMeeting, String name, Room room, String participants) {
         this.id = id;
         this.startMeeting = startMeeting;

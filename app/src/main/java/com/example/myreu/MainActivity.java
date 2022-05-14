@@ -190,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
                         Meeting meeting = adapter.getMeeting(position);
                         Intent myIntent = new Intent(MainActivity.this, DetailsActivity.class);
                         Bundle bundle = new Bundle();
+                        System.out.println("---------------------Size meeting on click item-----------------"+adapter.getItemCount());
                        // bundle.putString("userSelected", meeting.toString());
                         //bundle.putSerializable("userSelected",  meeting.toString());
                         bundle.putInt("id",meeting.getId());
